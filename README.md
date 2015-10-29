@@ -1,1 +1,1 @@
-# Weights-in-Equilibrium
+# Weights in Equilibrium
