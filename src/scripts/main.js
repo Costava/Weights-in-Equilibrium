@@ -22,7 +22,31 @@ function App() {
 	// The loop eases the change in the graphical represenation
 	//  of the weight system
 	this.looping = false;
+
+	// Whether to save new frames as they are drawn to .png
+	this.savingFrames = false;
+	// Incremented every time a frame is saved
+	// First frame will be frame 1
+	this.frameNumber = 0;
 }
+
+// http://stackoverflow.com/questions/10673122/how-to-save-canvas-as-an-image-with-canvas-todataurl
+// Thank you to Stack Overflow users user1874941 and gillyb
+App.prototype.saveFrame = function() {
+	this.frameNumber += 1;
+
+	var image = this.c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+
+	var a = document.createElement('a');
+	a.href = image;
+	a.download = 'frame' + this.frameNumber + '.png';
+
+	document.body.appendChild(a);
+	a.click();
+	// The behavior following depends on your browser settings:
+	//  You may get a save dialog
+	//  Image may be automatically saved to designated downloads folder
+};
 
 App.prototype.drawWequ = function() {
 	app.ctx.clearRect(0, 0, app.c.width, app.c.height);
@@ -133,6 +157,10 @@ App.prototype.loop = function() {
 	}
 
 	this.drawWequ();
+
+	if (this.savingFrames) {
+		this.saveFrame();
+	}
 
 	if (this.looping) {
 		window.requestAnimationFrame(function() {

@@ -20,6 +20,16 @@ body {
 	justify-content: center;
 
 	font-family: Arial, sans-serif;
+	font-size: medium;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 .app-container {
@@ -46,7 +56,7 @@ body {
 	font-weight: bold;
 }
 
-.control-panel td:nth-child(1):not(.button-cell):after {
+.control-panel td:nth-child(1):not(.button-cell):not(.info):after {
 	content: ":";
 }
 
@@ -89,4 +99,11 @@ body {
 	opacity: 1;
 	transition: opacity;
 	transition-duration: 0.5s;
+}
+
+.info {
+	padding: 10px;
+
+	text-align: center;
+	font-size: smaller;
 }
