@@ -10,44 +10,48 @@
 
 	<body>
 		<div class="app-container">
-			<canvas class="js-canvas app-canvas" width="300" height="300">Your browser does not support canvas :(</canvas>
+			<div class="half">
+				<canvas class="js-canvas app-canvas" width="300" height="300">Your browser does not support canvas :(</canvas>
+			</div>
 
-			<table class="control-panel">
-				<caption class="app-title">Weights in Equilibrium</caption>
-				<tbody>
-					<tr>
-						<td>Distance between pulleys</td>
-						<td><input type="text" class="js-pulley-length" value="10"></input></td>
-						<td>meters</td>
-					</tr>
-					<tr>
-						<td>Mass of each side block</td>
-						<td><input type="text" class="js-side-mass" value="80"></input></td>
-						<td>kilograms</td>
-					</tr>
-					<tr>
-						<td>Mass of center block</td>
-						<td><input type="text" class="js-center-mass" value="100"></input></td>
-						<td>kilograms</td>
-					</tr>
-					<tr>
-						<td colspan="3" class="button-cell"><button class="js-update">Update</button></td>
-					</tr>
-					<tr>
-						<td>Vertical displacement of center block</td>
-						<td><span class="js-bob-hang hang-span"></span></td>
-						<td class="hang-span-units">meters</td>
-					</tr>
-					<tr>
-						<td colspan="3" class="info">Author: <a href="https://github.com/Costava" target="_blank">Costava</a> | <a href="https://github.com/Costava/Weights-in-Equilibrium" target="_blank">View source on GitHub</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+			<div class="right half">
+				<h1 class="app-title">Weights in Equilibrium</h1>
+
+				<div class="control-panel">
+					<div class="flex-table-column">
+						<div class="desc">Distance between pulleys</div>
+						<div class="desc">Mass of each side block</div>
+						<div class="desc">Mass of center block</div>
+					</div>
+
+					<div class="flex-table-column input-column">
+						<input type="text" class="js-pulley-length" value="10"></input>
+						<input type="text" class="js-side-mass" value="80"></input>
+						<input type="text" class="js-center-mass" value="100"></input>
+					</div>
+
+					<div class="flex-table-column">
+						<div>meters</div>
+						<div>kilograms</div>
+						<div>kilograms</div>
+					</div>
+				</div>
+
+				<button class="js-update update">Update</button>
+
+				<div class="flex-table-row">
+					<div>Vertical displacement of center block:&nbsp;</div>
+					<span class="js-bob-hang hang-span"></span>
+					<div class="hang-span-units">meters</div>
+				</div>
+
+				<div class="info">Author: <a href="https://github.com/Costava" target="_blank">Costava</a> | <a href="https://github.com/Costava/Weights-in-Equilibrium" target="_blank">View source on GitHub</a></div>
+			</div><!-- End of second .half -->
+		</div><!-- End of .app-container -->
 
 		<div class="js-modal-container"></div>
-	</body>
 
-	<script src="scripts/wequ.js"></script>
-	<script src="scripts/main.js"></script>
+		<script src="scripts/wequ.js"></script>
+		<script src="scripts/main.js"></script>
+	</body>
 </html>
