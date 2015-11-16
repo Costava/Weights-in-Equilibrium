@@ -20,7 +20,7 @@ body {
 	justify-content: center;
 
 	font-family: Arial, sans-serif;
-	font-size: medium;
+	font-size: 16px;
 }
 
 a {
@@ -39,9 +39,22 @@ a:hover {
 	justify-content: center;
 
 	background-color: #fff;
-	padding: 40px;
+	padding: 20px;
 	border: 6px solid #000;
 	box-shadow: 0 0 20px 2px #444;
+}
+
+.half {
+	display: flex;
+	flex-direction: column;
+}
+
+.right {
+	padding: 0 0 0 20px;
+}
+
+.right.half > * {
+	padding: 10px 0 10px 0;
 }
 
 .app-canvas {
@@ -52,31 +65,56 @@ a:hover {
 }
 
 .app-title {
-	font-size: xx-large;
+	font-size: 32px;
 	font-weight: bold;
+
+	text-align: center;
+	margin: 0;
 }
 
-.control-panel td:nth-child(1):not(.button-cell):not(.info):after {
+.control-panel {
+	display: flex;
+	flex-direction: row;
+
+	justify-content: space-between;
+}
+
+.flex-table-column {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.flex-table-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.input-column {
+	max-width: 140px;
+}
+
+.desc:after {
 	content: ":";
-}
-
-.control-panel td input, .hang-span {
-	width: 100px;
 }
 
 .hang-span {
 	font-weight: bold;
-	float: left;
 	overflow: hidden;
 	text-overflow: ellipsis;
+
+	width: 100px;
 }
 
 .hang-span-units {
 	font-weight: bold;
 }
 
-.button-cell {
+.info {
 	text-align: center;
+
+	font-size: 12px;
 }
 
 .modal {
@@ -99,11 +137,4 @@ a:hover {
 	opacity: 1;
 	transition: opacity;
 	transition-duration: 0.5s;
-}
-
-.info {
-	padding: 10px;
-
-	text-align: center;
-	font-size: smaller;
 }
