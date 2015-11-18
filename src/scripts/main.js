@@ -67,7 +67,7 @@ App.prototype.getTargetValues = function() {
 	return newValues;
 };
 
-App.prototype.targetValuesFail = function(values) {
+App.prototype.targetValuesFail = function(values, error) {
 	console.log("Target value(s) not valid");
 
 	var source;
@@ -83,10 +83,10 @@ App.prototype.targetValuesFail = function(values) {
 	document.querySelector('.js-side-mass').value = source.sideMass;
 	document.querySelector('.js-center-mass').value = source.centerMass;
 
-	var uniqueClass = 'js-mass-problem-' + new Date().getTime();
+	var uniqueClass = 'js-value-problem-' + new Date().getTime();
 
 	// The modal cannot be appended to body because that will break the canvas for some reason
-	document.querySelector('.js-modal-container').innerHTML += '<div class="modal notification ' + uniqueClass + '">The combined mass of the side blocks must be greater than the mass of the center block.</div>';
+	document.querySelector('.js-modal-container').innerHTML += '<div class="modal notification ' + uniqueClass + '">' + error.message + '</div>';
 
 	(function(classHook) {
 		setTimeout(function() {
@@ -185,24 +185,26 @@ App.valuesValid = function(values) {
 	// console.log("valuesAreAllNumbers:", valuesAreAllNumbers);
 
 	if (!valuesAreAllNumbers) {
-		return false;
+		return new Error("All inputs must be valid numbers.");
 	}
 
 	// Side masses must have enough combined mass
 	//  to keep center mass in equilibrium
 	if (values.centerMass >= 2 * values.sideMass) {
-		return false;
+		return new Error("The combined mass of the side blocks must be greater than the mass of the center block.");
 	}
 
 	return true;
 };
 
 App.prototype._applyValues = function(values) {
-	if (!App.valuesValid(values)) {
-		this.targetValuesFail(values);
+	var validityResponse = App.valuesValid(values);
+
+	if (validityResponse === true) {
+		this.targetValuesSuccess(values);
 	}
 	else {
-		this.targetValuesSuccess(values);
+		this.targetValuesFail(values, validityResponse)
 	}
 };
 App.prototype.applyValues = function() {
