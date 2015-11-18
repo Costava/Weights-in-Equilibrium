@@ -54,12 +54,15 @@ App.prototype.drawWequ = function() {
 };
 
 App.prototype.getTargetValues = function() {
-	// Retrieve values and cast to number from string with "+"
-	var newPulleyLength = +document.querySelector('.js-pulley-length').value;
-	var newSideMass = +document.querySelector('.js-side-mass').value;
-	var newCenterMass = +document.querySelector('.js-center-mass').value;
+	var newPulleyLength = document.querySelector('.js-pulley-length').value;
+	var newSideMass = document.querySelector('.js-side-mass').value;
+	var newCenterMass = document.querySelector('.js-center-mass').value;
 
 	var newValues = {pulleyLength: newPulleyLength, sideMass: newSideMass, centerMass: newCenterMass};
+
+	for (var prop in newValues) {
+		newValues[prop] = parseFloat(newValues[prop]);
+	}
 
 	return newValues;
 };
