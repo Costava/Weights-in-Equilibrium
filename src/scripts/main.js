@@ -101,11 +101,6 @@ App.prototype.targetValuesFail = function(values) {
 App.prototype.targetValuesSuccess = function(values) {
 	// console.log("Target values are valid");
 
-	// Cast property values from strings to numbers
-	for (var prop in values) {
-		values[prop] = parseFloat(values[prop]);
-	}
-
 	// Calculate final bob hang length with an app.wequ clone
 	var clone = new Wequ();
 	for (var prop in app.wequ) {
