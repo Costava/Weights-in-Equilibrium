@@ -169,13 +169,27 @@ App.prototype.loop = function() {
 };
 
 App.valuesValid = function(values) {
-	if (values.pulleyLength === undefined ||
-		values.sideMass === undefined ||
-		values.centerMass === undefined)
-		{
+	// console.log("The keys of values argument:", Object.keys(values));
+
+	// Iterate through every key in argument object
+	//  and test if the value is a number
+	var valuesAreAllNumbers = Object.keys(values).every(function(prop) {
+		// console.log("(values." + prop + ")", values[prop], "is a number:", !isNaN(values[prop]));
+
+		// Return true if value is a number, false otherwise.
+		// A false returned here will stop iteration
+		//  and return false for valuesAreAllNumbers
+		return !isNaN(values[prop]);
+	});
+
+	// console.log("valuesAreAllNumbers:", valuesAreAllNumbers);
+
+	if (!valuesAreAllNumbers) {
 		return false;
 	}
 
+	// Side masses must have enough combined mass
+	//  to keep center mass in equilibrium
 	if (values.centerMass >= 2 * values.sideMass) {
 		return false;
 	}
