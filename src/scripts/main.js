@@ -86,11 +86,14 @@ App.prototype.targetValuesFail = function(values, error) {
 	var uniqueClass = 'js-value-problem-' + new Date().getTime();
 
 	// The modal cannot be appended to body because that will break the canvas for some reason
-	document.querySelector('.js-modal-container').innerHTML += '<div class="modal notification ' + uniqueClass + '">' + error.message + '</div>';
+	document.querySelector('.js-note-container').innerHTML += '<div class="notification ' + uniqueClass + '">' + error.message + '</div>';
 
 	(function(classHook) {
 		setTimeout(function() {
-			document.querySelector('.' + classHook).style.opacity = 0;
+			var elem = document.querySelector('.' + classHook);
+			elem.style['height'] = 0;
+			elem.style['border-width'] = 0;
+			elem.style['padding'] = 0;
 		}, 4500);
 	})(uniqueClass);
 

@@ -16,11 +16,14 @@ html, body {
 body {
 	background-color: #eee;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 
 	font-family: Arial, sans-serif;
 	font-size: 16px;
+
+	overflow: hidden;
 }
 
 a {
@@ -33,6 +36,8 @@ a:hover {
 }
 
 .app-container {
+	max-width: 800px;
+
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -117,17 +122,20 @@ a:hover {
 	font-size: 12px;
 }
 
-.modal {
-	position: absolute;
-	left: 50%;
-	top: 10%;
-	transform: translate(-50%, -50%);
+.note-holder {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 
 .notification {
 	background-color: #dc3411;
 	color: #fff;
 	border: 2px solid #000;
+	border-top: 0;
+	margin: 0 auto;
+	max-width: 800px;
 
 	box-shadow: 0 0 20px 2px #444;
 
@@ -135,6 +143,10 @@ a:hover {
 	font-weight: bold;
 
 	opacity: 1;
-	transition: opacity;
+	transition: height, border-width, padding;
 	transition-duration: 0.5s;
+
+	text-align: center;
+
+	overflow: hidden;
 }
