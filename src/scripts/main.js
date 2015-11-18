@@ -60,10 +60,14 @@ App.prototype.getTargetValues = function() {
 
 	var newValues = {pulleyLength: newPulleyLength, sideMass: newSideMass, centerMass: newCenterMass};
 
+	for (var prop in newValues) {
+		newValues[prop] = parseFloat(newValues[prop]);
+	}
+
 	return newValues;
 };
 
-App.prototype.targetValuesFail = function(values) {
+App.prototype.targetValuesFail = function(values, error) {
 	console.log("Target value(s) not valid");
 
 	var source;
@@ -79,14 +83,17 @@ App.prototype.targetValuesFail = function(values) {
 	document.querySelector('.js-side-mass').value = source.sideMass;
 	document.querySelector('.js-center-mass').value = source.centerMass;
 
-	var uniqueClass = 'js-mass-problem-' + new Date().getTime();
+	var uniqueClass = 'js-value-problem-' + new Date().getTime();
 
 	// The modal cannot be appended to body because that will break the canvas for some reason
-	document.querySelector('.js-modal-container').innerHTML += '<div class="modal notification ' + uniqueClass + '">The combined mass of the side blocks must be greater than the mass of the center block.</div>';
+	document.querySelector('.js-note-container').innerHTML += '<div class="notification ' + uniqueClass + '">' + error.message + '</div>';
 
 	(function(classHook) {
 		setTimeout(function() {
-			document.querySelector('.' + classHook).style.opacity = 0;
+			var elem = document.querySelector('.' + classHook);
+			elem.style['height'] = 0;
+			elem.style['border-width'] = 0;
+			elem.style['padding'] = 0;
 		}, 4500);
 	})(uniqueClass);
 
@@ -99,11 +106,6 @@ App.prototype.targetValuesFail = function(values) {
 };
 App.prototype.targetValuesSuccess = function(values) {
 	// console.log("Target values are valid");
-
-	// Cast property values from strings to numbers
-	for (var prop in values) {
-		values[prop] = parseFloat(values[prop]);
-	}
 
 	// Calculate final bob hang length with an app.wequ clone
 	var clone = new Wequ();
@@ -170,26 +172,42 @@ App.prototype.loop = function() {
 };
 
 App.valuesValid = function(values) {
-	if (values.pulleyLength === undefined ||
-		values.sideMass === undefined ||
-		values.centerMass === undefined)
-		{
-		return false;
+	// console.log("The keys of values argument:", Object.keys(values));
+
+	// Iterate through every key in argument object
+	//  and test if the value is a number
+	var valuesAreAllNumbers = Object.keys(values).every(function(prop) {
+		// console.log("(values." + prop + ")", values[prop], "is a number:", !isNaN(values[prop]));
+
+		// Return true if value is a number, false otherwise.
+		// A false returned here will stop iteration
+		//  and return false for valuesAreAllNumbers
+		return !isNaN(values[prop]);
+	});
+
+	// console.log("valuesAreAllNumbers:", valuesAreAllNumbers);
+
+	if (!valuesAreAllNumbers) {
+		return new Error("All inputs must be valid numbers.");
 	}
 
+	// Side masses must have enough combined mass
+	//  to keep center mass in equilibrium
 	if (values.centerMass >= 2 * values.sideMass) {
-		return false;
+		return new Error("The combined mass of the side blocks must be greater than the mass of the center block.");
 	}
 
 	return true;
 };
 
 App.prototype._applyValues = function(values) {
-	if (!App.valuesValid(values)) {
-		this.targetValuesFail(values);
+	var validityResponse = App.valuesValid(values);
+
+	if (validityResponse === true) {
+		this.targetValuesSuccess(values);
 	}
 	else {
-		this.targetValuesSuccess(values);
+		this.targetValuesFail(values, validityResponse)
 	}
 };
 App.prototype.applyValues = function() {
