@@ -205,17 +205,25 @@ app.wequ = new Wequ();
 app.wequ.scale = 3;
 app.wequ.draw(app.ctx);
 
-document.querySelector('.js-update').addEventListener('click', function() {
+app.update = function() {
 	app.applyValues();
-});
+};
 
+// Bind "Update" button
+document.querySelector('.js-update').addEventListener('click', app.update);
 
+// Update app with new values when a value changes
+document.querySelector('.js-pulley-length').addEventListener('change', app.update);
+document.querySelector('.js-side-mass').addEventListener('change', app.update);
+document.querySelector('.js-center-mass').addEventListener('change', app.update);
+
+// Bind enter key
 document.addEventListener('keydown', function(e) {
 	// console.log("e.keyCode:", e.keyCode);
 	if (e.keyCode === 13) {// Enter key
-		app.applyValues();
+		app.update();
 	}
 });
 
 // Initial run
-app.applyValues();
+app.update();
